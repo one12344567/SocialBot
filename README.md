@@ -1,57 +1,92 @@
-# SocialBot
+# Social Bot
 
-SocialBot 是一个用于模拟社交机器人的实验项目，旨在构建具有人格特征、对话能力与互动行为的智能体。当前版本已经在 Jupyter Notebook（`.ipynb`）中实现了基础的 Agent 功能，便于快速实验、调试与迭代。
+这是一个前后端分离的社交机器人项目：
 
-## 项目简介
+- 后端：FastAPI + LangChain（目录在 back）
+- 前端：React + Vite（目录在 ether-chat）
 
-本项目聚焦于社交场景下的智能体模拟，探索机器人在对话、回应、角色设定和行为决策中的表现方式。  
-通过引入大语言模型与 Agent 思路，SocialBot 希望逐步实现一个能够进行自然交流、具备角色感知能力，并可扩展到多智能体协作的社交机器人原型。
+## 当前目录结构
 
-## 当前功能
-
-- 已完成基础 Agent 功能实现
-- 支持在 `.ipynb` 中进行交互式实验
-- 可围绕人格设定进行对话测试
-- 便于快速调整 Prompt、流程与行为逻辑
-- 为后续扩展多智能体社交模拟打下基础
-
-## 当前状态
-
-目前项目仍处于原型开发阶段。  
-现阶段的核心逻辑主要在 Jupyter Notebook 中实现，适合做功能验证、提示词实验和交互流程设计。后续可以逐步拆分为独立的 Python 模块，形成更清晰的工程结构。
-
-## 技术栈
-
-- Python
-- Jupyter Notebook (`.ipynb`)
-- 大语言模型 Agent
-- `.env` 环境变量配置
-- `uv` 进行 Python 环境与依赖管理
-
-## 部署流程
-
-### 1.拉取项目代码
-这一步要提前准备好git环境，包括安装git、配置环境变量等。
-
-```
-git clone https://github.com/one12344567/SocialBot.git
+```text
+SocialBot/
+├─ .vscode/
+│  └─ settings.json
+├─ back/
+│  ├─ .env
+│  ├─ .env.example
+│  ├─ .gitignore
+│  ├─ main_api.py
+│  ├─ main.ipynb
+│  ├─ personas.json
+│  ├─ requirements.txt
+│  └─ upload/
+├─ ether-chat/
+│  ├─ src/
+│  │  ├─ App.tsx
+│  │  ├─ index.css
+│  │  └─ main.tsx
+│  ├─ package.json
+│  └─ 其他前端配置文件
+├─ .gitignore
+├─ requirements.txt
+├─ start.bat
+└─ README.md
 ```
 
-### 2.python环境准备
-激活虚拟环境，这里使用uv管理虚拟环境
+## 快速启动（推荐）
 
-并从requirements.txt安装依赖
-```
-uv venv
-source .venv/bin/activate
-uv pip install -r requirements.txt
+在项目根目录运行：
+
+```powershell
+.\start.bat
 ```
 
-### 3.配置环境变量
-出于安全考虑，本项目所使用的API密钥未直接暴露在代码中，而是通过环境变量传递。
+脚本会自动：
 
-新建.env文件，用于存储环境变量,内容格式如下：
-DEEPSEEK_API_KEY=sk-82b********************30
+- 进入 back 目录创建虚拟环境并安装后端依赖
+- 启动后端服务 http://localhost:8000
+- 进入 ether-chat 安装前端依赖并启动开发服务器 http://localhost:3000
 
-### 4.运行项目
-在ipynb中点击运行全部，即可开始运行项目
+## 手动启动
+
+### 1) 后端
+
+```powershell
+cd back
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn main_api:app --host 0.0.0.0 --port 8000
+```
+
+### 2) 前端
+
+```powershell
+cd ether-chat
+npm install
+npm run dev
+```
+
+## 环境变量
+
+后端使用 back/.env，最少需要配置：
+
+- DEEPSEEK_API_KEY=你的密钥
+
+可选：
+
+- PERSONAS_FILE=personas.json
+- DEFAULT_PERSONA_ID=kobe_fan
+
+可以先从 back/.env.example 复制一份再填写。
+
+## 接口说明
+
+- GET /personas：返回可用人设和默认人设
+- POST /chat：发送聊天请求
+- POST /upload：上传文件
+
+## 人设配置
+
+人设文件位置：back/personas.json
+
+修改后重启后端即可生效。
