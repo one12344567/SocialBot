@@ -11,11 +11,19 @@ import json
 from typing import Dict, Optional
 from dotenv import load_dotenv
 
-load_dotenv()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
+
+def _resolve_project_path(path_value: str) -> str:
+    if os.path.isabs(path_value):
+        return path_value
+    return os.path.join(BASE_DIR, path_value)
 
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
-PERSONAS_FILE = os.getenv("PERSONAS_FILE", "personas.json")
+PERSONAS_FILE = _resolve_project_path(os.getenv("PERSONAS_FILE", "personas.json"))
 DEFAULT_PERSONA_ID = os.getenv("DEFAULT_PERSONA_ID", "kobe_fan")
+UPLOAD_DIR = os.path.join(BASE_DIR, "upload")
 
 FALLBACK_PERSONAS = [
     {
@@ -121,8 +129,8 @@ async def list_personas():
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    os.makedirs("upload", exist_ok=True)
-    file_location = os.path.join("upload", file.filename)
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    file_location = os.path.join(UPLOAD_DIR, file.filename)
     with open(file_location, "wb") as f:
         content = await file.read()
         f.write(content)

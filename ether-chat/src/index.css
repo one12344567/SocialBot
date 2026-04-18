@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary: #4954bd;
+  --color-primary-container: #818cf8;
+  --color-surface: #f7f9fb;
+  --color-surface-container-low: #f0f4f7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-highest: #dce4e8;
+  --color-on-surface: #2c3437;
+  --color-outline-variant: rgba(172, 179, 183, 0.15);
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply backdrop-blur-[24px] saturate-[180%] bg-white/55 border border-white/40 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_10px_15px_-3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(255,255,255,0.2)];
+  }
+
+  .glass-card {
+    @apply backdrop-blur-[16px] saturate-[120%] bg-white/40 border border-white/60 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1),inset_0_0_0_1px_rgba(255,255,255,0.4)];
+  }
+
+  .glass-input {
+    @apply backdrop-blur-[8px] bg-white/60 border border-white/80 shadow-[0_2px_5px_rgba(0,0,0,0.02),inset_0_1px_2px_rgba(255,255,255,0.5)];
+  }
+
+  .ether-gradient {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  }
+
+  .floating {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+}
+
+body {
+  @apply font-sans text-on-surface min-h-screen;
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(236, 72, 153, 0.08) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* 主题色切换 */
+body[data-theme="深色"], .theme-深色 {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.22) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 45%),
+    radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 45%);
+}
+body[data-theme="深色"] .glass-panel,
+.theme-深色 .glass-panel,
+body[data-theme="深色"] .glass-card,
+.theme-深色 .glass-card,
+body[data-theme="深色"] .glass-input,
+.theme-深色 .glass-input {
+  background: rgba(15, 23, 42, 0.72) !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(148, 163, 184, 0.25) !important;
+}
+
+body[data-theme="深色"] .text-slate-900,
+body[data-theme="深色"] .text-slate-800 {
+  color: #f8fafc !important;
+}
+
+body[data-theme="深色"] .text-slate-700,
+body[data-theme="深色"] .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+
+body[data-theme="深色"] .text-slate-500,
+body[data-theme="深色"] .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+body[data-theme="深色"] .text-primary {
+  color: #a5b4fc !important;
+}
+
+body[data-theme="深色"] .bg-indigo-100 {
+  background-color: rgba(79, 70, 229, 0.34) !important;
+}
+
+body[data-theme="深色"] .bg-white\/80 {
+  background-color: rgba(30, 41, 59, 0.88) !important;
+}
+
+body[data-theme="深色"] .bg-white\/90 {
+  background-color: rgba(30, 41, 59, 0.94) !important;
+}
+
+body[data-theme="深色"] .border-indigo-100 {
+  border-color: rgba(129, 140, 248, 0.35) !important;
+}
+
+body[data-theme="深色"] .hover\:bg-white\/40:hover,
+body[data-theme="深色"] .hover\:bg-white\/60:hover {
+  background-color: rgba(51, 65, 85, 0.55) !important;
+}
+
+body[data-theme="深色"] .hover\:bg-indigo-50\/50:hover {
+  background-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+body[data-theme="深色"] .placeholder\:text-slate-400::placeholder {
+  color: #94a3b8 !important;
+}
+
+body[data-theme="浅色"], .theme-浅色 {
+  background-color: #f9fafb !important;
+  color: #222 !important;
+}
+
+/* 聊天消息字体大小变量 */
+.glass-card, .glass-panel, .glass-input, .rounded-2xl, .rounded-xl, .rounded-\[14px\], .rounded-\[20px\] {
+  font-size: var(--msg-font-size, 15px);
+}

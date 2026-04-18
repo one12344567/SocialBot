@@ -1,8 +1,1 @@
-fastapi
-uvicorn
-python-dotenv
-langchain
-langgraph
-langchain-deepseek
-pydantic
-python-multipart
+﻿-r back/requirements.txt

@@ -1,12 +1,26 @@
-.env
-.venv/
+# Workspace hygiene
 __pycache__/
+*.py[cod]
 .ipynb_checkpoints/
-node_modules/
-build/
-dist/
-coverage/
-.DS_Store
+
+# Python backend artifacts
+back/.venv/
+back/__pycache__/
+back/upload/*
+!back/upload/.gitkeep
+
+# Environment files
+.env
+.env.*
+back/.env
+back/.env.*
+!back/.env.example
+
+# Frontend artifacts
+ether-chat/node_modules/
+ether-chat/dist/
+ether-chat/.vite/
+
+# Logs and OS files
 *.log
-.env*
-!.env.example
+.DS_Store
